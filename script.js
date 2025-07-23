@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://165.22.208.62/api/resume'; // Make sure this matches your Flask API endpoint
+const BACKEND_URL = 'http://165.22.208.62:2502/api/resume'; // Make sure this matches your Flask API endpoint
 // const BACKEND_URL = 'http://192.168.1.195:5002/api/resume'; // Make sure this matches your Flask API endpoint
 
 // Global data arrays
