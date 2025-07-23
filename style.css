@@ -1,4 +1,4 @@
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
         :root {
             --bg-primary: #0a0a0f;
@@ -45,8 +45,8 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex; /* Added for footer sticky effect */
-            flex-direction: column; /* Added for footer sticky effect */
+            display: flex;
+            flex-direction: column;
         }
 
         /* Animated background particles */
@@ -117,7 +117,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            font-size: 1rem; /* Adjusted for smaller SVG */
+            font-size: 1rem;
             cursor: pointer;
             padding: 0.75rem 1.25rem;
             border-radius: 12px;
@@ -130,11 +130,11 @@
         }
 
         .coffee-btn svg {
-            width: 20px; /* Set specific width for SVG */
-            height: 28px; /* Set specific height for SVG */
-            fill: currentColor; /* Inherit color from parent */
+            width: 20px;
+            height: 28px;
+            fill: currentColor;
             vertical-align: middle;
-            transform: translateY(1px); /* Minor adjustment for visual alignment */
+            transform: translateY(1px);
         }
 
         .coffee-btn::before {
@@ -162,7 +162,7 @@
 
         /* Main Container */
         .container {
-            flex: 1; /* Allows container to grow and push footer down */
+            flex: 1;
             max-width: 1200px;
             margin: 0 auto;
             padding: 100px 2rem 2rem;
@@ -206,28 +206,41 @@
         }
 
         /* Resume Preview */
-        .preview-section {
-            margin-bottom: 4rem;
-            text-align: center;
-            animation: slideInUp 0.8s ease 0.4s both;
-        }
+.preview-section {
+    margin-bottom: 4rem;
+    text-align: center;
+    /* background-color: red; */ /* You might want to remove this background color */
+    /* height: 15% !important; */ /* This height might conflict if not carefully managed */
+    animation: slideInUp 0.8s ease 0.4s both;
+}
 
-        .preview-image {
+.preview-image {
+    width: 100%;
+    max-width: 600px; /* Increased from 500px for larger size */
+    height: 750px; /* Increased from 520px for larger size */
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+        
+        .preview-image img{
             width: 100%;
-            max-width: 400px; /* Max width for consistent design */
-            height: 520px; /* Fixed height for consistent layout */
-            background: var(--bg-card); /* Background for the container */
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            display: flex; /* Flexbox for centering content */
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 18px;
+            display: block;
             position: relative;
-            overflow: hidden; /* Crucial for containing the image within the border-radius */
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
+            z-index: 2;
         }
 
         .preview-image::before {
@@ -239,7 +252,7 @@
             height: 200%;
             background: conic-gradient(from 0deg, transparent, rgba(99, 102, 241, 0.1), transparent);
             animation: rotate 4s linear infinite;
-            z-index: 1; /* Ensure this visual effect is behind the image */
+            z-index: 1;
         }
 
         .preview-image:hover {
@@ -252,18 +265,17 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        /* Styling for the actual theme image */
+/* 
         .preview-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Default for desktop, crops to fill */
-            object-position: center; /* Centers the image within the container */
-            border-radius: 18px; /* Slight inset for a cleaner look within the parent's border-radius */
-            display: block; /* Remove any extra spacing often added by default to images */
-            position: relative; /* Ensure it respects parent's z-index and doesn't overlap particles */
-            z-index: 2; /* Ensure the image is above the particle effect */
-        }
+            object-fit: cover;
+            object-position: center;
+            border-radius: 18px;
+            display: block;
+            position: relative;
+            z-index: 2;
+        } */
 
         /* Form Sections */
         .form-section {
@@ -327,12 +339,40 @@
 
         .section-content {
             padding: 0 2rem 2rem;
-            display: none;
-            animation: fadeIn 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        .section-content.active {
-            display: block;
+        /* Desktop: Sections expanded by default, Mobile: Collapsed by default */
+        @media (min-width: 769px) {
+            .section-content {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .chevron {
+                transform: rotate(180deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-content {
+                display: none;
+            }
+            
+            .section-content.active {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .chevron {
+                transition: transform 0.3s ease;
+                color: var(--accent-primary);
+                font-size: 1.2rem;
+            }
+
+            .chevron.rotated {
+                transform: rotate(180deg);
+            }
         }
 
         @keyframes fadeIn {
@@ -344,10 +384,6 @@
             transition: transform 0.3s ease;
             color: var(--accent-primary);
             font-size: 1.2rem;
-        }
-
-        .chevron.rotated {
-            transform: rotate(180deg);
         }
 
         /* Form Inputs */
@@ -430,7 +466,7 @@
             border-radius: 12px;
             min-height: 60px;
             transition: all 0.3s ease;
-            align-items: center; /* Align items vertically */
+            align-items: center;
         }
 
         .skills-input:focus-within {
@@ -475,7 +511,7 @@
             flex: 1;
             min-width: 120px;
             font-size: 1rem;
-            padding: 0; /* Remove default input padding */
+            padding: 0;
         }
 
         .skills-input input::placeholder {
@@ -541,9 +577,9 @@
             margin-top: 1rem;
             position: relative;
             overflow: hidden;
-            display: inline-flex; /* Changed to inline-flex for proper icon alignment */
+            display: inline-flex;
             align-items: center;
-            gap: 0.75rem; /* Space between icon and text */
+            gap: 0.75rem;
         }
 
         .add-btn::before {
@@ -591,9 +627,9 @@
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-md);
-            display: inline-flex; /* Added for icon alignment */
+            display: inline-flex;
             align-items: center;
-            gap: 1rem; /* Space between icon and text */
+            gap: 1rem;
         }
 
         .submit-btn::before {
@@ -606,7 +642,7 @@
             background: var(--gradient-tertiary);
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: 1; /* Ensure this is behind content */
+            z-index: 1;
         }
 
         .submit-btn:hover {
@@ -627,7 +663,7 @@
         .loading {
             position: relative;
             pointer-events: none;
-            opacity: 0.7; /* Dim the button slightly */
+            opacity: 0.7;
         }
 
         .loading::after {
@@ -642,14 +678,14 @@
             border-top: 2px solid var(--accent-primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            z-index: 3; /* Ensure spinner is on top */
+            z-index: 3;
         }
 
         .loading span {
-            visibility: hidden; /* Hide text during loading */
+            visibility: hidden;
         }
-        .loading svg { /* Changed from i to svg */
-            visibility: hidden; /* Hide icon during loading */
+        .loading svg {
+            visibility: hidden;
         }
 
         @keyframes spin {
@@ -659,7 +695,7 @@
 
         /* Footer */
         .footer {
-            margin-top: auto; /* Pushes footer to the bottom */
+            margin-top: auto;
             background: var(--bg-secondary);
             border-top: 1px solid var(--border);
             padding: 2rem 2rem;
@@ -671,7 +707,7 @@
             align-items: center;
             gap: 1rem;
             position: relative;
-            z-index: 10; /* Ensure footer is above particles */
+            z-index: 10;
         }
 
         .footer-links a {
@@ -679,7 +715,7 @@
             text-decoration: none;
             margin: 0 0.8rem;
             transition: color 0.3s ease, transform 0.3s ease;
-            display: inline-flex; /* For icon alignment */
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
@@ -691,7 +727,7 @@
 
         .footer-links i {
             font-size: 1rem;
-            color: var(--accent-primary); /* Consistent accent color for icons */
+            color: var(--accent-primary);
         }
 
         /* Responsive Design */
@@ -714,14 +750,12 @@
             }
 
             .preview-image {
-                height: 100%; /* Adjust height for smaller screens if necessary */
+                height: 100%;
             }
 
-            /* --- CRITICAL CHANGE FOR MOBILE IMAGE VISIBILITY --- */
             .preview-image img {
-                object-fit: contain; /* Ensures the whole image is visible on mobile */
+                object-fit: contain;
             }
-            /* --- END CRITICAL CHANGE --- */
 
             .section-header {
                 padding: 1.5rem;
@@ -752,12 +786,12 @@
             }
 
             .coffee-btn {
-                font-size: 0.9rem; /* Further reduce font size for smaller screens */
+                font-size: 0.9rem;
                 padding: 0.5rem 1rem;
             }
 
             .coffee-btn svg {
-                width: 16px; /* Adjust SVG size for very small screens */
+                width: 16px;
                 height: 22px;
             }
 

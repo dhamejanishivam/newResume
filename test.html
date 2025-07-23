@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Test</title>
+</head>
+<body>
+
+    <button onclick="create()">Hit</button>
+
+    <script>
+
+        const data = {
+            "selectedTemplateId": 1,
+            "name": "Samay Raina",
+            "email": "samay.raina@example.com",
+            "phone": "+91 9012345678",
+            "location": "Kolkata, India",
+            "objective": "Enthusiastic and innovative software developer with a passion for competitive programming and open-source contributions. Seeking challenging roles to apply problem-solving skills and enhance system performance.",
+            "work_experience": [
+                {
+                    "title": "Software Development Engineer Intern",
+                    "company": "Fictional Tech Solutions, Bengaluru",
+                    "duration": "May 2023 - Aug 2023",
+                    "description": "Developed and optimized backend APIs for a scalable e-commerce platform using Python and Django, leading to a 20% reduction in response time. Implemented new features for user authentication and payment processing."
+                }
+            ],
+            "education": [
+                {
+                    "degree": "B.Tech in Computer Science and Engineering", // Changed from degreeName
+                    "year": "2020 - 2024",                               // Combined startYear and endYear into 'year'
+                    "institution": "Indian Institute of Technology Kharagpur" // Changed from instituteName
+                    // 'location' is removed as it's not in the target format for education entries
+                },
+                {
+                    "degree": "Higher Secondary Education (XII)",
+                    "year": "2018 - 2020",
+                    "institution": "DPS R.K. Puram, Delhi"
+                }
+            ],
+            "projects": [
+                {
+                    "projectName": "Online Chess Platform (Full-Stack)", // Changed from name
+                    "projectLink": "https://github.com/samayraina_dev/chess-platform", // Changed from url
+                    "projectDesc": "Built a real-time online chess game with a Node.js backend and React frontend, supporting user matchmaking and ELO rating system." // Changed from description
+                },
+                {
+                    "projectName": "Automated Stock Trading Bot",
+                    "projectLink": "",
+                    "projectDesc": "Developed a Python bot using historical data and machine learning models for automated stock trading, achieving simulated returns of 15% over a quarter."
+                }
+            ],
+            "skills": [
+                "Python", "Java", "JavaScript", "C++", "Django", "React", "Node.js", "SQL", "PostgreSQL",
+                "Algorithms", "Data Structures"
+            ],
+            "additional_details": [
+                "Winner, Inter-IIT Tech Meet (Competitive Programming, 2022)",
+                "Organized Annual Chess Tournament at IIT Kharagpur",
+                "Active Contributor to popular open-source repositories on GitHub",
+                "Avid chess player and comedian in leisure time."
+            ]
+        }   
+
+        // The function needs to be declared as 'async' to use 'await'
+        async function create(){
+            try {
+                // Using localhost:5002 as specified for your backend testing
+                const response = await fetch("http://localhost:5002/api/resume", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "resume.pdf";
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    alert("Resume generated and downloading...");
+                } else {
+                    const errorText = await response.text();
+                    console.error("Error response text:", errorText);
+                    alert(`Failed to generate resume. Server responded with an error: ${errorText}`);
+                }
+            } catch (error) {
+                console.error("Network or Fetch Error:", error);
+                alert("An error occurred while generating the resume! Check console for details.");
+            }
+        };
+    </script>
+
+</body>
+</html>
